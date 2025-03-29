@@ -19,6 +19,9 @@ def index():
         logging.debug(f"Received ingredients: {ingredients}")
         session['ingredients'] = ingredients
         recipes = get_recipes(ingredients)
+        if not recipes:
+            no_recipes_found = True
+        return render_template('index.html', recipes=recipes, no_recipes_found=no_recipes_found)
     elif 'ingredients' in session:
         logging.debug(f"Using session ingredients: {session['ingredients']}")
         recipes = get_recipes(session['ingredients'])
