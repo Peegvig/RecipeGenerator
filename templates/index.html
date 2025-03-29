@@ -63,10 +63,20 @@
 </head>
 <body>
     <h1><i class="fa-solid fa-bowl-food"></i> Smart Recipe Generator</h1>
-    <form method="post">
-        <label for="ingredients">Enter ingredients (comma-separated):</label>
-        <input type="text" name="ingredients" required value="{{ request.form['ingredients'] if 'ingredients' in request.form else '' }}">
-        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Find Recipes</button>
+    <div style="position: absolute; top: 20px; right: 20px; width: 200px;">
+        <h3>Ingredients</h3>
+        <ul id="ingredient-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: white;">
+            <!-- Ingredients will be dynamically added here -->
+        </ul>
+    </div>
+    <form id="ingredient-form" style="display: flex; align-items: center; gap: 10px;">
+        <label for="ingredient-input">Enter an ingredient:</label>
+        <input type="text" id="ingredient-input" placeholder="e.g., chicken" required>
+        <button type="button" id="add-ingredient-btn"><i class="fa-solid fa-plus"></i> Add Ingredient</button>
+        <button type="submit" form="search-form"><i class="fa-solid fa-magnifying-glass"></i> Find Recipes</button>
+    </form>
+    <form method="post" id="search-form">
+        <input type="hidden" name="ingredients" id="ingredients-hidden">
     </form>
     <h2>Recipes:</h2>
     <ul>
@@ -80,5 +90,43 @@
             </li>
         {% endfor %}
     </ul>
+    <script>
+        const ingredientList = document.getElementById('ingredient-list');
+        const ingredientInput = document.getElementById('ingredient-input');
+        const addIngredientBtn = document.getElementById('add-ingredient-btn');
+        const ingredientsHidden = document.getElementById('ingredients-hidden');
+        const searchForm = document.getElementById('search-form');
+
+        let ingredients = [];
+
+        addIngredientBtn.addEventListener('click', () => {
+            const ingredient = ingredientInput.value.trim();
+            if (ingredient && !ingredients.includes(ingredient)) {
+                ingredients.push(ingredient);
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'X';
+                removeBtn.style.marginLeft = '10px';
+                removeBtn.style.color = 'red';
+                removeBtn.style.border = 'none';
+                removeBtn.style.background = 'none';
+                removeBtn.style.cursor = 'pointer';
+                removeBtn.addEventListener('click', () => {
+                    ingredients = ingredients.filter(i => i !== ingredient);
+                    ingredientList.removeChild(li);
+                    updateHiddenInput();
+                });
+                li.appendChild(removeBtn);
+                ingredientList.appendChild(li);
+                ingredientInput.value = '';
+                updateHiddenInput();
+            }
+        });
+
+        function updateHiddenInput() {
+            ingredientsHidden.value = ingredients.join(',');
+        }
+    </script>
 </body>
 </html>
