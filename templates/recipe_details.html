@@ -18,6 +18,6 @@
     <h2>Instructions</h2>
     <p>{{ recipe.instructions|safe }}</p>
 
-    <a href="/">Back to Recipes</a>
+    <a href="{{ url_for('index') }}">Back to Recipes</a>
 </body>
 </html>

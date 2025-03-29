@@ -1,8 +1,10 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for, session
 import requests
 import os
 
 app = Flask(__name__)
+app.secret_key = 'meowmeow22'  # Change this to a secure key
+
 
 API_KEY = os.getenv('SPOONACULAR_API_KEY')
 
@@ -11,8 +13,12 @@ def index():
     recipes = []
     if request.method == 'POST':
         ingredients = request.form.get('ingredients')
+        session['ingredients'] = ingredients
         recipes = get_recipes(ingredients)
+    elif 'ingredients' in session:
+        recipes = get_recipes(session['ingredients'])
     return render_template('index.html', recipes=recipes)
+
 
 def get_recipes(ingredients):
     url = f"https://api.spoonacular.com/recipes/findByIngredients?ingredients={ingredients}&number=5&apiKey={API_KEY}"
