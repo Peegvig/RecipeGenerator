@@ -37,11 +37,11 @@
         li:last-child {
             border-bottom: none;
         }
-        p {
-            background-color: #fff;
-            padding: 20px;
+        ol {
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        ol li {
+            margin-bottom: 10px;
         }
         a button {
             background-color: #4CAF50;
@@ -62,14 +62,18 @@
     <img src="{{ recipe.image }}" alt="{{ recipe.title }}" width="300">
     
     <h2><i class="fa-solid fa-carrot"></i> Ingredients</h2>
-    <ul>
-        {% for ingredient in recipe.extendedIngredients if ingredient.original %}
-            <li>{{ ingredient.original }}</li>
-        {% endfor %}
-    </ul>
+    <div>
+        <ul>
+            {% for ingredient in recipe.extendedIngredients if ingredient.original %}
+                <li>{{ ingredient.original }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <h2><i class="fa-solid fa-list-ul"></i> Instructions</h2>
-    <p>{{ recipe.instructions|safe }}</p>
+    <ol>
+        {{ recipe.instructions|safe }}
+    </ol>
 
     <a href="{{ url_for('index') }}"><button><i class="fa-solid fa-arrow-left"></i> Back to Recipes</button></a>
 </body>
