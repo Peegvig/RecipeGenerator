@@ -17,8 +17,10 @@
             <li>
                 <h3>{{ recipe['title'] }}</h3>
                 <img src="{{ recipe['image'] }}" alt="{{ recipe['title'] }}" width="150">
+                <a href="/recipe/{{ recipe['id'] }}"><button>View Details</button></a>
             </li>
         {% endfor %}
     </ul>
+    
 </body>
 </html>
