@@ -88,17 +88,21 @@
         <input type="hidden" name="ingredients" id="ingredients-hidden">
     </form>
     <h2>Recipes:</h2>
-    <ul>
-        {% for recipe in recipes %}
-            <li>
-                <img src="{{ recipe['image'] }}" alt="{{ recipe['title'] }}" width="150">
-                <div>
-                    <h3>{{ recipe['title'] }}</h3>
-                    <a href="/recipe/{{ recipe['id'] }}"><button><i class="fa-solid fa-arrow-right"></i> View Details</button></a>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if no_recipes_found %}
+        <p>No recipes found. Please try different ingredients.</p>
+    {% else %}
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <img src="{{ recipe['image'] }}" alt="{{ recipe['title'] }}" width="150">
+                    <div>
+                        <h3>{{ recipe['title'] }}</h3>
+                        <a href="/recipe/{{ recipe['id'] }}"><button><i class="fa-solid fa-arrow-right"></i> View Details</button></a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <script>
         const ingredientList = document.getElementById('ingredient-list');
         const ingredientInput = document.getElementById('ingredient-input');

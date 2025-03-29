@@ -13,6 +13,7 @@ API_KEY = os.getenv('SPOONACULAR_API_KEY')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     recipes = []
+    no_recipes_found = False
     if request.method == 'POST':
         ingredients = request.form.get('ingredients')
         logging.debug(f"Received ingredients: {ingredients}")
@@ -21,7 +22,9 @@ def index():
     elif 'ingredients' in session:
         logging.debug(f"Using session ingredients: {session['ingredients']}")
         recipes = get_recipes(session['ingredients'])
-    return render_template('index.html', recipes=recipes)
+    if not recipes:
+        no_recipes_found = True
+    return render_template('index.html', recipes=recipes, no_recipes_found=no_recipes_found)
 
 
 def get_recipes(ingredients):
