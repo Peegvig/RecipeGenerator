@@ -44,3 +44,85 @@ li {
 #ingredient-list li:last-child {
     border-bottom: none;
 }
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+    color: #1e3a8a; /* Dark blue for headings */
+}
+
+body.dark-mode button {
+    background-color: #1e3a8a;
+    color: #ffffff;
+}
+
+body.dark-mode button:hover {
+    background-color: #162a6b;
+}
+
+body.dark-mode ul li {
+    background-color: #2C2C2C; /* Updated to #2C2C2C */
+    color: #ffffff;
+    border: 1px solid #333;
+}
+
+body.dark-mode #ingredient-list {
+    background-color: #2C2C2C; /* Updated to #2C2C2C */
+    border: 1px solid #333;
+}
+
+body.dark-mode img {
+    border: 2px solid #1e3a8a;
+}
+
+body.dark-mode ul,
+body.dark-mode ol {
+    background-color: #2C2C2C; /* Updated to #2C2C2C */
+    border: 1px solid #333;
+    color: #ffffff;
+}
+
+body.dark-mode a button {
+    background-color: #1e3a8a;
+}
+
+body.dark-mode a button:hover {
+    background-color: #162a6b;
+}
+
+#dark-mode-toggle + span {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+#dark-mode-toggle:checked + span {
+    background-color: #4CAF50;
+}
+
+#dark-mode-toggle + span #slider {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 18px;
+    height: 18px;
+    background-color: white; /* Default color for light mode */
+    border-radius: 50%;
+    transition: left 0.3s, background-color 0.3s; /* Smooth transition for color and position */
+}
+
+#dark-mode-toggle:checked + span #slider {
+    left: 21px;
+    background-color: #1e3a8a !important; /* Ensure the circle is dark blue in dark mode */
+    border: none; /* Remove border for a cleaner look */
+    box-shadow: 0 0 5px #1e3a8a; /* Add a subtle glow effect */
+}

@@ -62,8 +62,17 @@
     </style>
 </head>
 <body>
+    <div style="position: absolute; top: 20px; right: 20px;">
+        <label for="dark-mode-toggle" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <span>Dark Mode</span>
+            <input type="checkbox" id="dark-mode-toggle" style="display: none;">
+            <span style="width: 40px; height: 20px; background-color: #ccc; border-radius: 20px; position: relative; display: inline-block;">
+                <span id="slider" style="width: 18px; height: 18px; background-color: white; border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: left 0.3s;"></span>
+            </span>
+        </label>
+    </div>
     <h1><i class="fa-solid fa-bowl-food"></i> Smart Recipe Generator</h1>
-    <div style="position: absolute; top: 20px; right: 20px; width: 200px;">
+    <div style="position: absolute; top: 50px; right: 20px; width: 200px;">
         <h3>Ingredients</h3>
         <ul id="ingredient-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: white;">
             <!-- Ingredients will be dynamically added here -->
@@ -75,7 +84,7 @@
         <button type="button" id="add-ingredient-btn"><i class="fa-solid fa-plus"></i> Add Ingredient</button>
         <button type="submit" form="search-form"><i class="fa-solid fa-magnifying-glass"></i> Find Recipes</button>
     </form>
-    <form method="post" id="search-form">
+    <form method="post" id="search-form" onsubmit="updateHiddenInput();">
         <input type="hidden" name="ingredients" id="ingredients-hidden">
     </form>
     <h2>Recipes:</h2>
@@ -126,6 +135,24 @@
 
         function updateHiddenInput() {
             ingredientsHidden.value = ingredients.join(',');
+            console.log("Updated hidden input:", ingredientsHidden.value); // Debugging log
+        }
+
+        const toggleCheckbox = document.getElementById('dark-mode-toggle');
+        const slider = document.getElementById('slider');
+        const body = document.body;
+
+        toggleCheckbox.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+            slider.style.left = toggleCheckbox.checked ? '21px' : '1px';
+        });
+
+        // Load dark mode preference from localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            body.classList.add('dark-mode');
+            toggleCheckbox.checked = true;
+            slider.style.left = '21px';
         }
     </script>
 </body>

@@ -58,6 +58,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // Apply dark mode if the preference is stored in localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
     <h1><i class="fa-solid fa-utensils"></i> {{ recipe.title }}</h1>
     <img src="{{ recipe.image }}" alt="{{ recipe.title }}" width="300">
     
